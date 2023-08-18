@@ -1,0 +1,55 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Java generated files
+*.class
+*.jar
+
+# macOS trush files
+.DS_Store
+
+# Library files
+*.dll
+*.dylib
+*.so
+*.a
+*.o
+!third_party/wasmer/lib/**/*
+
+# Distribution / packaging
+src/**/build/**/*
+!third_party/llhttp/build/**/*
+third_party/node/lib
+third_party/node/dist
+
+
+# Installed files
+out/
+
+*.log
+
+# gn files
+.gn
+.gnfiles
+
+# cmake generated files
+compile_commands.json
+
+# Javascript/Typescript generated files
+node_modules/
+
+.cache
+*.code-workspace
+
+# Node.js addon files
+.node
+
+# Clangd index file
+.clangd
+
+# ccls cache files
+.ccls-cache/
+
+# Android studio
+.idea
