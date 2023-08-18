@@ -16,6 +16,7 @@ __pycache__/
 *.a
 *.o
 !third_party/wasmer/lib/**/*
+main
 
 # Distribution / packaging
 src/**/build/**/*
@@ -26,6 +27,7 @@ third_party/node/dist
 
 # Installed files
 out/
+build/
 
 *.log
 
