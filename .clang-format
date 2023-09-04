@@ -147,6 +147,7 @@ RawStringFormats:
     CanonicalDelimiter: ''
     BasedOnStyle:    google
 ReflowComments:  true
+# on windows, this may cause compile problems
 SortIncludes:    true
 SortUsingDeclarations: true
 SpaceAfterCStyleCast: false
