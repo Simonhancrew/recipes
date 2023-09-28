@@ -65,5 +65,11 @@ void Erase(std::basic_string<CharT, Traits, Allocator>& container,
                   container.end());
 }
 
+template <typename Container>
+constexpr auto size(const Container& c) -> decltype(c.size()) {
+  return c.size();
+}
+
+
 }  // namespace utils
 }  // namespace base
