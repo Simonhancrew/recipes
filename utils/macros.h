@@ -8,6 +8,10 @@
   type_name(type_name&&) = delete;          \
   const type_name& operator=(type_name&&) = delete
 
+
+#define PASTE(x, y) x##y
+#define CAT2(x, y) PASTE(x, y)
+
 // Usage
 // switch(x) {
 //   CASE_STRING(x)
