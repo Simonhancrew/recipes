@@ -179,6 +179,10 @@ int main(int arc, char *argv[]) {
   BIO_dump_fp(stdout, ciphertext, ciphertext_len);
   printf("Tag is:\n");
   BIO_dump_fp(stdout, tag, 14);
+  printf("aad is:\n");
+  BIO_dump_fp(stdout, aad.data(), aad.size());
+  printf("iv is\n");
+  BIO_dump_fp(stdout, iv.data(), iv.size());
 
   /* Mess with stuff */
   /* ciphertext[0] ^= 1; */
@@ -198,7 +202,7 @@ int main(int arc, char *argv[]) {
     decryptedtext[decryptedtext_len] = '\0';
 
     /* Show the decrypted text */
-    puts("Decrypted text is:\n");
+    std::cout << "Decrypted text is:\n";
     std::cout << decryptedtext << '\n';
   }
 
