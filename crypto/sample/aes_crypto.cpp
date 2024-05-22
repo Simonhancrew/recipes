@@ -174,6 +174,7 @@ int main(int arc, char *argv[]) {
               aad.size(), reinterpret_cast<unsigned char *>(key.data()),
               reinterpret_cast<unsigned char *>(iv.data()), ciphertext, tag);
 
+#ifndef USE_BORINGSSL
   /* Do something useful with the ciphertext here */
   printf("Ciphertext is:\n");
   BIO_dump_fp(stdout, ciphertext, ciphertext_len);
@@ -183,6 +184,7 @@ int main(int arc, char *argv[]) {
   BIO_dump_fp(stdout, aad.data(), aad.size());
   printf("iv is\n");
   BIO_dump_fp(stdout, iv.data(), iv.size());
+#endif
 
   /* Mess with stuff */
   /* ciphertext[0] ^= 1; */
