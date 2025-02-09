@@ -49,9 +49,17 @@ node_modules/
 
 # Clangd index file
 .clangd
+.cache/
 
 # ccls cache files
 .ccls-cache/
 
 # Android studio
 .idea
+
+# xmake build
+makefile
+.xmake/
+
+# vscode settings
+.vscode/
