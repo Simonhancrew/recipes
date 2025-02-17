@@ -12,4 +12,4 @@ set_languages("gnu90", "c++17")
 set_warnings("all")
 set_exceptions("no-cxx")
 
-includes("utils")
+includes("utils", "net")
