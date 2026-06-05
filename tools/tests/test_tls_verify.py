@@ -7,6 +7,21 @@ import tls_verify
 
 
 class TlsVerifyTests(unittest.TestCase):
+    def test_select_server_hostname_prefers_explicit_sni(self) -> None:
+        self.assertEqual(
+            tls_verify.select_server_hostname("114.236.137.40", "agora.io"),
+            "agora.io",
+        )
+
+    def test_parse_args_keeps_domain_and_sni_separate(self) -> None:
+        args = tls_verify.parse_args(
+            ["114.236.137.40", "--sni", "agora.io", "--domain", "example.com"],
+        )
+
+        self.assertEqual(args.target, "114.236.137.40")
+        self.assertEqual(args.sni, "agora.io")
+        self.assertEqual(args.domain, "example.com")
+
     def test_extract_verifiable_names_prefers_san_and_dedupes(self) -> None:
         certificate = {
             "subjectAltName": (
@@ -99,7 +114,9 @@ class TlsVerifyTests(unittest.TestCase):
 
         stdout = io.StringIO()
         with redirect_stdout(stdout):
-            exit_code = tls_verify.main(["192.0.2.10", "agora.io"])
+            exit_code = tls_verify.main(
+                ["192.0.2.10", "--sni", "agora.io", "--domain", "agora.io"],
+            )
 
         self.assertEqual(exit_code, 1)
         self.assertIn("Validation for agora.io: FAIL", stdout.getvalue())

@@ -23,9 +23,9 @@ def is_ip_address(value: str) -> bool:
     return True
 
 
-def select_server_hostname(target: str, domain: str | None) -> str | None:
-    if domain:
-        return domain
+def select_server_hostname(target: str, sni: str | None) -> str | None:
+    if sni:
+        return sni
     if is_ip_address(target):
         return None
     return target
@@ -34,14 +34,14 @@ def select_server_hostname(target: str, domain: str | None) -> str | None:
 def fetch_peer_certificate(
     target: str,
     port: int,
-    domain: str | None = None,
+    sni: str | None = None,
     timeout: float = 5.0,
 ) -> Certificate:
     context = ssl.create_default_context()
     context.check_hostname = False
     context.verify_mode = ssl.CERT_NONE
 
-    server_hostname = select_server_hostname(target, domain)
+    server_hostname = select_server_hostname(target, sni)
     with socket.create_connection((target, port), timeout=timeout) as sock:
         with context.wrap_socket(sock, server_hostname=server_hostname) as tls_sock:
             certificate = decode_peer_certificate(tls_sock)
@@ -223,6 +223,10 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         dest="domain_option",
         help="Optional domain/name to validate against the certificate.",
     )
+    parser.add_argument(
+        "--sni",
+        help="Optional SNI value to send during the TLS handshake.",
+    )
     parser.add_argument("--port", type=int, default=443, help="TLS port. Default: 443.")
     parser.add_argument(
         "--timeout",
@@ -247,7 +251,7 @@ def main(argv: list[str] | None = None) -> int:
         certificate = fetch_peer_certificate(
             target=args.target,
             port=args.port,
-            domain=args.domain,
+            sni=args.sni,
             timeout=args.timeout,
         )
     except Exception as exc:
